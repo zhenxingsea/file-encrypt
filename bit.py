@@ -21,12 +21,11 @@ def imgtofile(filename,savefile,key):
 				y = (inhash%(index+1))%3
 				filed.write(struct.pack('B',pimg[i,j][y]))
 				
-def filetoimg(filename,savefile,key):
+def filetoimg(filename,key):
 	inhash = hash(key)
 	filesize = os.path.getsize(filename)
 	sqrtxy = int(math.sqrt(filesize))+1
 	size = (sqrtxy,sqrtxy)
-	print size
 	dataimg = Image.new('RGB', size)
 	pimg = dataimg.load()
 	f = open(filename,'rb')
@@ -46,13 +45,14 @@ def filetoimg(filename,savefile,key):
 					pimg[i,j]= (random.randint(1,255),random.randint(1,255),code)
 			else:
 				f.close()
-				dataimg.save(savefile)
+				dataimg.save('save.bmp')
+				print 'saved file:save.bmp'
 				return
 	
 if __name__ == "__main__":
-	if(sys.argv[1] == 'txt'):
-		filetoimg(sys.argv[2],sys.argv[3],sys.argv[4])
-	elif(sys.argv[1] == 'img'):
+	if(sys.argv[1] == 'en'):
+		filetoimg(sys.argv[2],sys.argv[3])
+	elif(sys.argv[1] == 'un'):
 		imgtofile(sys.argv[2],sys.argv[3],sys.argv[4])
 	else:
 		print 'plase sure commen is ok!'
